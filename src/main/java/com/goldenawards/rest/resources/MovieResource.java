@@ -39,7 +39,7 @@ public class MovieResource {
 	@GetMapping(value = "/classification", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Classification>> fetchAllWinners() {
 		List<Classification> classification = new ArrayList<>();
-		classification = controller.classifyWinnerList(service.findAllWinners());
+		classification = controller.classifyWinnerList(service.findByWinnerTrue());
 		return ResponseEntity.ok().body(classification);
 	}
 

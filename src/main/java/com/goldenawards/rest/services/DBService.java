@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import com.goldenawards.rest.controllers.CSVReader;
 import com.goldenawards.rest.domain.Movie;
+import com.goldenawards.rest.helper.CSVReader;
 import com.goldenawards.rest.repositories.MovieRepository;
 
 @Service

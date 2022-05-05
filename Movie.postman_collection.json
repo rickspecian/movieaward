@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "18e375c4-7f55-4747-8d3e-1d57f869456f",
+		"name": "Movie",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createMovie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 1985,\r\n    \"title\": \"Title 1\",\r\n    \"studios\": \"Studio 1\",\r\n    \"producers\": \"Producer 1\",\r\n    \"winner\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/movie/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMovieList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMovieById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/50",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteMovie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMovie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\":1985,\r\n    \"title\": \"testado\",\r\n    \"studios\":\"todos\",\r\n    \"producers\":\"nenhum\",\r\n    \"winner\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/movie/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listProducerClassification",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/movie/classification",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movie",
+						"classification"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

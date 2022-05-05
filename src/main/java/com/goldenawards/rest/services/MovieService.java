@@ -23,8 +23,8 @@ public class MovieService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Movie.class.getName()));
 	}
 
-	public List<Movie> findAllWinners() {
-		List<Movie> listMovie = repository.findAllWinner();
+	public List<Movie> findByWinnerTrue() {
+		List<Movie> listMovie = repository.findByWinnerTrue();
 		return listMovie;
 	}
 

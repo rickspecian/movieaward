@@ -1,4 +1,4 @@
-package com.goldenawards.rest.controllers;
+package com.goldenawards.rest.helper;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
