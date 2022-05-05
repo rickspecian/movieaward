@@ -3,7 +3,9 @@ package com.goldenawards.rest.controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.goldenawards.rest.domain.Classification;
 import com.goldenawards.rest.domain.Movie;
 import com.goldenawards.rest.domain.MovieClassification;
 
@@ -16,12 +18,12 @@ public class MovieController {
 			String[] producerSplit = mc.getProducers().split(", | and ");
 			for (int x = 0; x < producerSplit.length; x++) {
 				if (map.get(producerSplit[x]) == null) {
-					map.put(producerSplit[x], mc.getYear());
+					map.put(producerSplit[x].trim(), mc.getYear());
 				} else {
 					if (map.get(producerSplit[x]) < mc.getYear() && "min".equals(type)) {
-						map.put(producerSplit[x], mc.getYear());
+						map.put(producerSplit[x].trim(), mc.getYear());
 					} else if (map.get(producerSplit[x]) > mc.getYear() && "max".equals(type)) {
-						map.put(producerSplit[x], mc.getYear());
+						map.put(producerSplit[x].trim(), mc.getYear());
 					}
 				}
 			}
@@ -61,4 +63,23 @@ public class MovieController {
 
 		return movieClassificationsList;
 	}
+
+	public List<Classification> classifyWinnerList(List<Movie> movieList) {
+		List<Classification> classification = new ArrayList<>();
+		List<MovieClassification> movies = this.classification(movieList);
+
+		List<MovieClassification> listMin = movies.stream()
+				.filter(x -> x.getInterval().equals(
+						movies.stream().min((z, y) -> z.getInterval().compareTo(y.getInterval())).get().getInterval()))
+				.collect(Collectors.toList());
+
+		List<MovieClassification> listMax = movies.stream()
+				.filter(x -> x.getInterval().equals(
+						movies.stream().max((z, y) -> z.getInterval().compareTo(y.getInterval())).get().getInterval()))
+				.collect(Collectors.toList());
+
+		classification.add(new Classification(listMin, listMax));
+		return classification;
+	}
+
 }

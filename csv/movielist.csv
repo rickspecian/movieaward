@@ -1,4 +1,6 @@
 year;title;studios;producers;winner
+2028;Test1;Test1;George Lucas;yes
+2028;Test1;Test1;Matthew Vaughn;yes
 1980;Can't Stop the Music;Associated Film Distribution;Allan Carr;yes
 1980;Cruising;Lorimar Productions, United Artists;Jerry Weintraub;
 1980;The Formula;MGM, United Artists;Steve Shagan;
@@ -115,6 +117,7 @@ year;title;studios;producers;winner
 2001;Pearl Harbor;Touchstone Pictures;Michael Bay and Jerry Bruckheimer;
 2001;3000 Miles to Graceland;Warner Bros., Franchise Pictures;Demian Lichtenstein, Eric Manes, Elie Samaha, Richard Spero and Andrew Stevens;
 2002;Swept Away;Screen Gems;Matthew Vaughn;yes
+2002;Swept Away;Screen Gems;George Lucas;yes
 2002;The Adventures of Pluto Nash;Warner Bros.;Martin Bregman, Michael Scott Bregman and Louis A. Stroller;
 2002;Crossroads;Paramount Pictures;Ann Carli;
 2002;Pinocchio;Miramax Films;Gianluigi Braschi, Nicoletta Braschi and Elda Ferri;

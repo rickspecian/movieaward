@@ -18,9 +18,11 @@ public class DBService {
 
 	@Bean
 	public void instanceDatabase() {
-		ArrayList<Movie> valores = new CSVReader().loader("C:\\Estudo\\MovieAward\\csv\\movielist.csv");
 
-		movieRepository.saveAll(valores);
+		ArrayList<Movie> movies = new CSVReader()
+				.loader(System.getProperty("user.home") + System.getProperty("file.separator") + "movielist.csv");
+
+		movieRepository.saveAll(movies);
 	}
 
 }

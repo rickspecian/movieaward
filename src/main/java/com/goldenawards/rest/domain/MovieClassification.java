@@ -11,6 +11,10 @@ public class MovieClassification {
 		super();
 	}
 
+	public MovieClassification(Integer interval) {
+		this.interval = interval;
+	}
+
 	public MovieClassification(String producer, Integer interval, Integer previousWin, Integer followingWin) {
 		super();
 		this.producer = producer;
@@ -49,6 +53,10 @@ public class MovieClassification {
 
 	public void setFollowingWin(Integer followingWin) {
 		this.followingWin = followingWin;
+	}
+
+	public void toList() {
+
 	}
 
 }
