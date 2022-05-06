@@ -4,14 +4,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.goldenawards.rest.domain.Movie;
+import com.goldenawards.rest.domain.MovieEntity;
 
 public class CSVReader {
 
 	private static Scanner input;
-	private static ArrayList<Movie> valores = new ArrayList<Movie>();
+	private static ArrayList<MovieEntity> valores = new ArrayList<MovieEntity>();
 
-	public ArrayList<Movie> loader(String file) {
+	public ArrayList<MovieEntity> loader(String file) {
 
 		try {
 			input = new Scanner(Paths.get(file));
@@ -21,7 +21,7 @@ public class CSVReader {
 			while (input.hasNext()) {
 				String[] data = input.nextLine().split(";");
 				if (data.length > 0) {
-					Movie movie = new Movie();
+					MovieEntity movie = new MovieEntity();
 
 					movie.setYear(Integer.parseInt(data[0]));
 					movie.setTitle(data[1]);

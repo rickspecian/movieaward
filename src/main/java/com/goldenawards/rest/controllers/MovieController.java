@@ -1,85 +1,81 @@
 package com.goldenawards.rest.controllers;
 
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.goldenawards.rest.domain.Classification;
-import com.goldenawards.rest.domain.Movie;
-import com.goldenawards.rest.domain.MovieClassification;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.goldenawards.rest.helper.MovieHelper;
+import com.goldenawards.rest.models.Classification;
+import com.goldenawards.rest.models.Movie;
+import com.goldenawards.rest.services.MovieService;
+
+@RestController
+@RequestMapping(path = "/movie")
 public class MovieController {
+	@Autowired
+	private MovieService service;
 
-	public HashMap<String, Integer> splitProducers(List<Movie> movie, String type) {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
+	private MovieHelper controller = new MovieHelper();
 
-		for (Movie mc : movie) {
-			String[] producerSplit = mc.getProducers().split(", | and ");
-			for (int x = 0; x < producerSplit.length; x++) {
-				if (map.get(producerSplit[x]) == null) {
-					map.put(producerSplit[x].trim(), mc.getYear());
-				} else {
-					if (map.get(producerSplit[x]) < mc.getYear() && "min".equals(type)) {
-						map.put(producerSplit[x].trim(), mc.getYear());
-					} else if (map.get(producerSplit[x]) > mc.getYear() && "max".equals(type)) {
-						map.put(producerSplit[x].trim(), mc.getYear());
-					}
-				}
-			}
-
-		}
-		return map;
-	}
-
-	public List<MovieClassification> classification(List<Movie> listWinner) {
-		HashMap<String, Integer> mapMin = this.splitProducers(listWinner, "min");
-		HashMap<String, Integer> mapMax = this.splitProducers(listWinner, "max");
-
-		List<MovieClassification> movieClassificationsList = new ArrayList<MovieClassification>();
-
-		for (String producer : mapMin.keySet()) {
-			Integer minAno = null;
-			Integer maxAno = null;
-
-			if (mapMin.get(producer) < mapMax.get(producer)) {
-				minAno = mapMin.get(producer);
-				maxAno = mapMax.get(producer);
-			} else {
-				minAno = mapMax.get(producer);
-				maxAno = mapMin.get(producer);
-			}
-
-			MovieClassification movieClassification = new MovieClassification();
-			movieClassification.setProducer(producer);
-			movieClassification.setPreviousWin(minAno);
-			movieClassification.setFollowingWin(maxAno);
-			movieClassification.setInterval(maxAno - minAno);
-
-			if (movieClassification.getInterval() > 0) {
-				movieClassificationsList.add(movieClassification);
-			}
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Movie> findMovieById(@PathVariable Integer id) {
+		try {
+			Movie movie = service.findById(id);
+			return ResponseEntity.ok().body(movie);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
 		}
 
-		return movieClassificationsList;
 	}
 
-	public List<Classification> classifyWinnerList(List<Movie> movieList) {
+	@GetMapping(value = "/classification", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Classification>> fetchAllWinners() {
 		List<Classification> classification = new ArrayList<>();
-		List<MovieClassification> movies = this.classification(movieList);
-
-		List<MovieClassification> listMin = movies.stream()
-				.filter(x -> x.getInterval().equals(
-						movies.stream().min((z, y) -> z.getInterval().compareTo(y.getInterval())).get().getInterval()))
-				.collect(Collectors.toList());
-
-		List<MovieClassification> listMax = movies.stream()
-				.filter(x -> x.getInterval().equals(
-						movies.stream().max((z, y) -> z.getInterval().compareTo(y.getInterval())).get().getInterval()))
-				.collect(Collectors.toList());
-
-		classification.add(new Classification(listMin, listMax));
-		return classification;
+		classification = controller.classifyWinnerList(service.findByWinnerTrue());
+		return ResponseEntity.ok().body(classification);
 	}
 
+	@GetMapping(value = "/")
+	public ResponseEntity<List<Movie>> listAllMovies() {
+		List<Movie> listMovie = service.findAll();
+		return ResponseEntity.ok().body(listMovie);
+	}
+
+	@PostMapping
+	public ResponseEntity<Movie> insertMovieOnList(@RequestBody Movie movie) {
+		movie = service.create(movie);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movie.getId()).toUri();
+		return ResponseEntity.created(uri).body(movie);
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deleteMovieFromList(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Movie> updateMovieFromList(@PathVariable Integer id, @RequestBody Movie obj) {
+		Movie newObj;
+		try {
+			newObj = service.update(id, obj);
+			return ResponseEntity.ok().body(newObj);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
+
+	}
 }

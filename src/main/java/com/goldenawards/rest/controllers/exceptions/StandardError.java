@@ -1,4 +1,4 @@
-package com.goldenawards.rest.resources.exceptions;
+package com.goldenawards.rest.controllers.exceptions;
 
 import java.io.Serializable;
 

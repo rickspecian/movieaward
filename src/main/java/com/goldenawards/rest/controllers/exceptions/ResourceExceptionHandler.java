@@ -1,4 +1,4 @@
-package com.goldenawards.rest.resources.exceptions;
+package com.goldenawards.rest.controllers.exceptions;
 
 import javax.servlet.ServletRequest;
 
@@ -14,10 +14,10 @@ public class ResourceExceptionHandler {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, ServletRequest request) {
-		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NO_CONTENT.value(),
 				e.getMessage());
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(error);
 
 	}
 

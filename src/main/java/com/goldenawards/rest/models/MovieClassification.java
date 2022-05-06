@@ -1,4 +1,4 @@
-package com.goldenawards.rest.domain;
+package com.goldenawards.rest.models;
 
 public class MovieClassification {
 

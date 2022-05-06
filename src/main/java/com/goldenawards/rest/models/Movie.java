@@ -1,42 +1,30 @@
-package com.goldenawards.rest.domain;
+package com.goldenawards.rest.models;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Movie implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@GeneratedValue
-	@Id
 	private Integer id;
 
-	@Column(name = "year")
 	private Integer year;
 
-	@Column(name = "title")
 	private String title;
 
-	@Column(name = "studios")
 	private String studios;
 
-	@Column(name = "producers")
 	private String producers;
 
-	@Column(name = "winner")
 	private boolean winner;
 
 	public Movie() {
 
 	}
 
-	public Movie(Integer year, String title, String studios, String producers, boolean winner) {
+	public Movie(Integer id, Integer year, String title, String studios, String producers, boolean winner) {
 		super();
+		this.id = id;
 		this.year = year;
 		this.title = title;
 		this.studios = studios;

@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.goldenawards.rest.domain.Movie;
+import com.goldenawards.rest.domain.MovieEntity;
 
 @Repository
-public interface MovieRepository extends JpaRepository<Movie, Integer> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Integer> {
 
-	List<Movie> findByWinnerTrue();
+	List<MovieEntity> findByWinnerTrue();
 
 }
